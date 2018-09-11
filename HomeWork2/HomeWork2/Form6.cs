@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml.Linq;
 
 /*Task 1
 Create an application with a size of up to 720x480 pixels and place
@@ -41,17 +42,34 @@ namespace HomeWork2
         {
             if(saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                using (Stream s = File.Open(saveFileDialog1.FileName, FileMode.CreateNew))
-                using (StreamWriter sw = new StreamWriter(s))
+                if(saveFileDialog1.FilterIndex == 1)
                 {
-                    sw.WriteLine($"Surname : {textBox3.Text}");
-                    sw.WriteLine($"Name : {textBox2.Text}");
-                    sw.WriteLine($"Patronymic : {textBox1.Text}");
-                    sw.WriteLine($"Sex : {textBox6.Text}");
-                    sw.WriteLine($"Marital status : {textBox5.Text}");
-                    sw.WriteLine($"Date of birth; : {dateTimePicker1.Text}");
-                    sw.WriteLine($"Additional info : {richTextBox1.Text}");
+                    using (Stream s = File.Open(saveFileDialog1.FileName, FileMode.CreateNew))
+                    using (StreamWriter sw = new StreamWriter(s))
+                    {
+                        sw.WriteLine($"Surname : {textBox3.Text}");
+                        sw.WriteLine($"Name : {textBox2.Text}");
+                        sw.WriteLine($"Patronymic : {textBox1.Text}");
+                        sw.WriteLine($"Sex : {textBox6.Text}");
+                        sw.WriteLine($"Marital status : {textBox5.Text}");
+                        sw.WriteLine($"Date of birth; : {dateTimePicker1.Text}");
+                        sw.WriteLine($"Additional info : {richTextBox1.Text}");
+                    }
                 }
+                if(saveFileDialog1.FilterIndex == 2)
+                {
+                    XElement xml = new XElement("Persons",
+                    new XElement("Person",
+                    new XElement("Surname", textBox3.Text),
+                    new XElement("Name", textBox2.Text),
+                    new XElement("Sex", textBox6.Text),
+                    new XElement("Marital_status", textBox5.Text),
+                    new XElement("Date_of_birth",dateTimePicker1.Text),
+                    new XElement("Additional_info",richTextBox1.Text)
+                    ));
+                    xml.Save(saveFileDialog1.FileName);
+                }
+                
             }
         }
     }

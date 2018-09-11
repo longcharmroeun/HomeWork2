@@ -90,7 +90,8 @@
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "Text File(txt)|*,txt";
+            this.saveFileDialog1.Filter = "Text File (txt)|*,txt|XML (xml)|*,xml";
+            this.saveFileDialog1.FilterIndex = 2;
             // 
             // Form12
             // 
@@ -104,6 +105,8 @@
             this.Controls.Add(this.listBox1);
             this.Name = "Form12";
             this.Text = "Form12";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form12_FormClosing);
+            this.Load += new System.EventHandler(this.Form12_Load);
             this.ResumeLayout(false);
 
         }

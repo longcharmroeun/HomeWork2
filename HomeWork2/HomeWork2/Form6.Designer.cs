@@ -147,7 +147,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(478, 92);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(85, 13);
+            this.label7.Size = new System.Drawing.Size(77, 13);
             this.label7.TabIndex = 11;
             this.label7.Tag = "■ Additional info.";
             this.label7.Text = "■ Date of birth";
@@ -172,7 +172,8 @@
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "Text File|*,txt";
+            this.saveFileDialog1.Filter = "Text File (txt)|*,txt|XMl (xml)|*,xml";
+            this.saveFileDialog1.FilterIndex = 2;
             // 
             // dateTimePicker1
             // 
