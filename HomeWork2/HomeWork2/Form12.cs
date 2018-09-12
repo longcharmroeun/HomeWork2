@@ -10,25 +10,24 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml.Serialization;
 
+
+/*Task 2
+Write an application-questionnaire to be filled in by the user: name,
+surname, e-mail, phone number. After clicking the Add button, the
+user data goes to the ListBox, wherein there is information about all
+users. Also, in ListBox, when cliking a string with information about
+a user, there should be the possibility to delete this user from the
+collection of ListBox element, as well as to edit. Information about a
+user can be edited by substituting data from ListBox to appropriate
+fields for inputting new information.
+Provide for:
+■ Import/export of all the information about users into a text file;
+■ Import/export of all the information about users into a *.xml file.*/
+
+
+
 namespace HomeWork2
 {
-    public class Data
-    {
-        public string[] data { get; set; }
-        public string[] name { get; set; }
-        public Data(int size)
-        {
-            data = new string[size];
-            name = new string[size];
-        }
-        public Data()
-        {
-            data = new string[20];
-            name = new string[20];
-        }
-    }
-    
-
     public partial class Form12 : Form
     {
         public string[] text = new string[20];
@@ -62,14 +61,7 @@ namespace HomeWork2
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                if (listBox1.SelectedIndex >= 0 && listBox1.SelectedIndex < 20) richTextBox1.Text = text[listBox1.SelectedIndex];
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message,"Warning" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            if (listBox1.SelectedIndex >= 0 && listBox1.SelectedIndex <= i) richTextBox1.Text = text[listBox1.SelectedIndex];
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -128,6 +120,7 @@ namespace HomeWork2
             
         }
 
+
         private void Form12_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isdosth)
@@ -144,6 +137,43 @@ namespace HomeWork2
                     }
                 }
             }  
+        }
+
+        private void listBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                listBox1.SelectedIndex = listBox1.IndexFromPoint(e.X, e.Y);
+                try
+                {
+
+                    if (listBox1.SelectedIndex >= 0 && listBox1.SelectedIndex <= i)
+                    {
+                        richTextBox1.Text = text[listBox1.SelectedIndex];
+                        MessageBoxManager.No = "Remove";
+                        MessageBoxManager.Yes = "Edite";
+                        MessageBoxManager.Register();
+                        DialogResult Messag = MessageBox.Show("info", "Do you want to", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+                        MessageBoxManager.Unregister();
+                        if (Messag == DialogResult.No)
+                        {
+                            data.data[listBox1.SelectedIndex] = null;
+                            data.name[listBox1.SelectedIndex] = null;
+                            listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+                            isdosth = true;
+                        }
+                        if(Messag == DialogResult.Yes)
+                        {
+                            Form6 form6 = new Form6(true, data.data[listBox1.SelectedIndex], data.name[listBox1.SelectedIndex]);
+                            form6.ShowDialog();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
     }
 }

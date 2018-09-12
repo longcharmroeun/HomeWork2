@@ -172,8 +172,10 @@
             // 
             // saveFileDialog1
             // 
+            this.saveFileDialog1.DefaultExt = "xml";
+            this.saveFileDialog1.FileName = "hello";
             this.saveFileDialog1.Filter = "Text File (txt)|*,txt|XMl (xml)|*,xml";
-            this.saveFileDialog1.FilterIndex = 2;
+            this.saveFileDialog1.FilterIndex = 3;
             // 
             // dateTimePicker1
             // 

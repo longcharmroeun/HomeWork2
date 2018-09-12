@@ -10,8 +10,53 @@ using System.Windows.Forms;
 
 
 /*Task 6
-Write a program that determines a day of the week based on the date
-entered. The result is output in a text box.*/
+Task formulation.
+The owner of a filling station “BestOil” ordered the following
+program. When the filling station just begins its work, the owner usually
+wants to get the largest possible income, which he/she plans to increase
+due to additional services. Therefore, at the filling station a small cafe
+will operate. But, at the same time he/she can hire only one employee to
+the position of cashier, and therefore the purpose of the program is in
+recording the sales of gasoline and product range in mini cafe.
+
+ Requirements for the task.
+For convenience, the window is divided into three parts: the first for
+the calculations related directly to fueling of vehicles; the second for
+calculating the purchase in the mini-cafe; the third part for calculating
+the payment amount.
+So, the first group of elements – Filling station.
+ComboBox is drop-down list with a list of the available fuel. By
+default, once you run the program, a certain type of fuel should be
+selected in the TextBox (or, for instance, Label), the price for this type
+of product should be displayed. At each change of fuel, the price in this
+field will change accordingly.
+Furthermore, there should a possibility of choice: buy fuel specifying
+the required number of liters or specifying the sum of money for
+refueling. Thus, after selecting one of the two options of the service,
+the unnecessary field becomes blocked. If you enter the amount of
+money, the “Amount payable” group will change its name to “Liters
+paid”; instead of the sum one should display the number of liters, the
+units change from “UAH” to “l” respectively.
+The second group – Mini-cafe.
+For convenience, all the possible goods are displayed in this part as
+once. A CheckBox with the product name is provided for each product,
+its price is displayed next (enabled TextBox). Upon the receipt of the
+order, one should put a tick in the CheckBox next to the corresponding
+product in order to be able to enter the number of units ordered.
+The last – Total amount payable.
+It contains a button that is responsible for the calculation and display
+of amounts in the appropriate fields.
+When the amount is displayed, a query to clean the form should
+appear 10 seconds later (for example), that is, when the next client
+appears: yes – all the fields become default, no – unchanged status
+remains for 10 seconds more. When you exit the program (working
+day is over) you should see a message box with the total amount of
+revenue for the day. Or this amount can be directly output to the form
+itself, and change after each client.
+In addition, make the form look aesthetic (color, fonts, pictures...).
+In case of a justified need and an interesting solution of the program
+functionality it is allowed to make changes in the appearance of the
+form or in the set of elements.*/
 
 namespace HomeWork2
 {

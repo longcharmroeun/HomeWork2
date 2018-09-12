@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Xml.Linq;
+using System.Xml.Serialization;
 
 /*Task 1
 Create an application with a size of up to 720x480 pixels and place
@@ -28,14 +28,54 @@ namespace HomeWork2
 {
     public partial class Form6 : Form
     {
-        public Form6()
+        Form6Data data = new Form6Data();
+        public bool load = false;
+        public string Dir,filename;
+        public Form6(bool load = false, string Dir = null, string filename = null)
         {
             InitializeComponent();
+            if (load)
+            {
+                this.load = load;
+                this.Dir = Dir;
+                this.filename = filename;
+                saveFileDialog1.CheckFileExists = true;
+                saveFileDialog1.FilterIndex = 2;
+                saveFileDialog1.FileName = filename;
+                saveFileDialog1.DefaultExt = "xml";
+                saveFileDialog1.InitialDirectory = Dir;
+                Text = filename;
+            }
         }
 
         private void Form6_Load(object sender, EventArgs e)
         {
+            if (load)
+            {
+                try
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(Form6Data));
+                    using (FileStream fs = new FileStream(Dir, FileMode.Open))
+                    {
+                        data = xs.Deserialize(fs) as Form6Data;
+                    }
+                    if (data != null)
+                    {
+                        textBox1.Text = data.Patronymic;
+                        textBox2.Text = data.Name;
+                        textBox3.Text = data.Surname;
+                        textBox6.Text = data.Sex;
+                        textBox5.Text = data.MTstatue;
+                        dateTimePicker1.Text = data.DateBt;
+                        richTextBox1.Text = data.AddInfo;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
 
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -44,6 +84,7 @@ namespace HomeWork2
             {
                 if(saveFileDialog1.FilterIndex == 1)
                 {
+                    saveFileDialog1.DefaultExt = "txt";
                     using (Stream s = File.Open(saveFileDialog1.FileName, FileMode.CreateNew))
                     using (StreamWriter sw = new StreamWriter(s))
                     {
@@ -58,16 +99,21 @@ namespace HomeWork2
                 }
                 if(saveFileDialog1.FilterIndex == 2)
                 {
-                    XElement xml = new XElement("Persons",
-                    new XElement("Person",
-                    new XElement("Surname", textBox3.Text),
-                    new XElement("Name", textBox2.Text),
-                    new XElement("Sex", textBox6.Text),
-                    new XElement("Marital_status", textBox5.Text),
-                    new XElement("Date_of_birth",dateTimePicker1.Text),
-                    new XElement("Additional_info",richTextBox1.Text)
-                    ));
-                    xml.Save(saveFileDialog1.FileName);
+                    saveFileDialog1.DefaultExt = "xml";
+                    data.Surname = textBox3.Text;
+                    data.Name = textBox2.Text;
+                    data.Patronymic = textBox1.Text;
+                    data.Sex = textBox6.Text;
+                    data.MTstatue = textBox5.Text;
+                    data.DateBt = dateTimePicker1.Text;
+                    data.AddInfo = richTextBox1.Text;
+                    FileStream fs = null;
+                    XmlSerializer xs = new XmlSerializer(typeof(Form6Data));
+
+                    using (fs = new FileStream(saveFileDialog1.FileName, FileMode.Create))
+                    {
+                        xs.Serialize(fs, data);
+                    }
                 }
                 
             }

@@ -16,7 +16,7 @@ namespace HomeWork2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form12());
+            Application.Run(new Controle());
         }
     }
 }
