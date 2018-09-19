@@ -13,6 +13,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        private string hstring;
         private bool istextwrite = false, isopenfile = false;
         public Form1()
         {
@@ -122,15 +123,33 @@ namespace WindowsFormsApp1
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            e.Graphics.DrawString(richTextBox1.Text, richTextBox1.Font, Brushes.Black, 100, 100);
+           SolidBrush brush = new SolidBrush(richTextBox1.ForeColor);
+            // Sets the value of charactersOnPage to the number of characters 
+            // of stringToPrint that will fit within the bounds of the page.
+            e.Graphics.MeasureString(richTextBox1.Text, richTextBox1.Font,
+                e.MarginBounds.Size, StringFormat.GenericTypographic,
+                out int charactersOnPage, out int linesPerPage);
+
+            // Draws the string within the bounds of the page
+            e.Graphics.DrawString(richTextBox1.Text, richTextBox1.Font, brush,
+                e.MarginBounds, StringFormat.GenericTypographic);
+
+            // Remove the portion of the string that has been printed.
+            richTextBox1.Text = richTextBox1.Text.Substring(charactersOnPage);
+
+            // Check to see if more pages are to be printed.
+            e.HasMorePages = (richTextBox1.Text.Length > 0);
+
         }
 
         private void printPreviewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            hstring = richTextBox1.Text;
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
                 printDocument1.Print();
             }
+            richTextBox1.Text = hstring;
         }
 
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -201,6 +220,14 @@ namespace WindowsFormsApp1
                 copyToolStripMenuItem.Enabled = true;
             }
         }
+
+        private void colorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK) {
+                richTextBox1.ForeColor = colorDialog1.Color;
+            }
+        }
+
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
             if (!istextwrite) istextwrite = true;
