@@ -213,11 +213,15 @@ namespace WindowsFormsApp1
             {
                 cutToolStripMenuItem.Enabled = false;
                 copyToolStripMenuItem.Enabled = false;
+                cutToolStripMenuItem1.Enabled = false;
+                copyToolStripMenuItem1.Enabled = false;
             }
             else
             {
                 cutToolStripMenuItem.Enabled = true;
                 copyToolStripMenuItem.Enabled = true;
+                cutToolStripMenuItem1.Enabled = true;
+                copyToolStripMenuItem1.Enabled = true;
             }
         }
 
@@ -226,6 +230,36 @@ namespace WindowsFormsApp1
             if (colorDialog1.ShowDialog() == DialogResult.OK) {
                 richTextBox1.ForeColor = colorDialog1.Color;
             }
+        }
+
+        private void undoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            undoToolStripMenuItem.PerformClick();
+        }
+
+        private void redoToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            redoToolStripMenuItem.PerformClick();
+        }
+
+        private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            cutToolStripMenuItem.PerformClick();
+        }
+
+        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            copyToolStripMenuItem.PerformClick();
+        }
+
+        private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            pasteToolStripMenuItem.PerformClick();
+        }
+
+        private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            selectAllToolStripMenuItem.PerformClick();
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
